@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>다음 강의는 당신의 의견으로 만들어집니다 | 잔재미코딩</title>
+  <meta name="description" content="잔재미코딩 학습자 서베이 이벤트 — 5분 서베이 응답하고 무료 수강권 추첨에 응모하세요." />
+  <style>
+    :root {
+      --navy: #0d1430;
+      --navy-2: #121b3f;
+      --navy-card: #172250;
+      --navy-line: #27336b;
+      --orange: #f04e23;
+      --orange-dark: #d23e16;
+      --blue: #3a63d8;
+      --cream: #f1ecd9;
+      --text: #eef1fa;
+      --muted: #9aa4c8;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+        "Malgun Gothic", "맑은 고딕", "Segoe UI", Roboto, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    a { color: inherit; }
+
+    /* ---------- CTA button (unified orange) ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
+    .btn .arrow { transition: transform 0.2s; }
+    .btn:hover .arrow { transform: translateX(4px); }
+
+    .btn-lg {
+      font-size: 1.12rem;
+      padding: 17px 38px;
+      box-shadow: 0 14px 34px rgba(240, 78, 35, 0.4);
+    }
+    .btn-sm { font-size: 0.9rem; padding: 10px 20px; }
+
+    /* ---------- Header ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 20, 48, 0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--navy-line);
+    }
+    .nav {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 13px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav .logo {
+      background: #fff;
+      border-radius: 10px;
+      padding: 7px 12px;
+      display: inline-flex;
+    }
+    .nav .logo img { height: 28px; width: auto; display: block; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 96px 0 90px;
+      overflow: hidden;
+      background:
+        radial-gradient(760px 420px at 50% -8%, rgba(58, 99, 216, 0.28), transparent 62%),
+        radial-gradient(620px 360px at 88% 12%, rgba(240, 78, 35, 0.16), transparent 60%);
+    }
+    .eyebrow {
+      display: inline-block;
+      background: rgba(58, 99, 216, 0.16);
+      border: 1px solid var(--navy-line);
+      color: #b9c6ff;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      padding: 7px 16px;
+      border-radius: 999px;
+      margin-bottom: 26px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5.4vw, 3.4rem);
+      line-height: 1.22;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero h1 .hl { color: var(--orange); }
+    .hero .sub {
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+      color: var(--muted);
+      margin-bottom: 38px;
+    }
+    .hero .sub b { color: var(--text); font-weight: 700; }
+    .hero .note { margin-top: 16px; font-size: 0.9rem; color: var(--muted); }
+
+    /* ---------- Section base ---------- */
+    section.block { padding: 78px 0; }
+    .section-head { text-align: center; margin-bottom: 50px; }
+    .section-head .tag {
+      color: var(--orange);
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-head h2 {
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .section-head p { color: var(--muted); margin-top: 12px; }
+
+    /* ---------- Benefits ---------- */
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 26px;
+    }
+    .benefit {
+      position: relative;
+      border-radius: var(--radius);
+      padding: 38px 34px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--navy-line);
+    }
+    .benefit.first {
+      background: linear-gradient(150deg, #1b2a66 0%, #101a44 100%);
+    }
+    .benefit.first::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 2px solid var(--orange);
+      border-radius: var(--radius);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .benefit.second { background: var(--navy-card); }
+    .benefit .rank {
+      display: inline-block;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+      padding: 5px 15px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    .benefit.first .rank { background: var(--orange); color: #fff; }
+    .benefit.second .rank { background: rgba(255,255,255,0.1); color: var(--cream); }
+    .benefit .emoji { font-size: 2.6rem; display: block; margin-bottom: 14px; }
+    .benefit h3 { font-size: 1.5rem; font-weight: 800; line-height: 1.35; margin-bottom: 8px; }
+    .benefit .count { color: var(--muted); font-weight: 600; font-size: 0.98rem; }
+
+    /* ---------- Steps ---------- */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .step {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-line);
+      border-radius: var(--radius);
+      padding: 30px 22px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .step:hover { transform: translateY(-4px); border-color: var(--orange); }
+    .step .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+    }
+    .step h3 { font-size: 1.02rem; font-weight: 700; }
+
+    /* ---------- Period / Announcement box ---------- */
+    .period-box {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--navy-line);
+      background: linear-gradient(135deg, #1a2a66 0%, #101a44 100%);
+      box-shadow: var(--shadow);
+    }
+    .period-box .cell { padding: 46px 36px; text-align: center; }
+    .period-box .cell + .cell { border-left: 1px solid var(--navy-line); }
+    .period-box .cell .ico { font-size: 2rem; margin-bottom: 10px; }
+    .period-box .cell .k {
+      color: var(--orange);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .period-box .cell .v { font-size: clamp(1.2rem, 3vw, 1.7rem); font-weight: 800; }
+    .period-box .cell .vsub { color: var(--muted); font-size: 0.92rem; margin-top: 6px; }
+
+    /* ---------- FAQ ---------- */
+    .faq { max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      border: 1px solid var(--navy-line);
+      border-radius: 14px;
+      background: var(--navy-card);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1.04rem;
+      font-weight: 700;
+      padding: 22px 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .faq-q .plus {
+      flex: 0 0 auto;
+      color: var(--orange);
+      font-size: 1.5rem;
+      font-weight: 400;
+      transition: transform 0.25s;
+      line-height: 1;
+    }
+    .faq-item.open .faq-q .plus { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq-a .inner { padding: 0 24px 22px; color: var(--muted); font-size: 0.98rem; }
+
+    /* ---------- Final CTA ---------- */
+    .final-cta {
+      text-align: center;
+      padding: 92px 0;
+      background:
+        radial-gradient(640px 320px at 50% 0%, rgba(240, 78, 35, 0.22), transparent 62%),
+        var(--navy-2);
+      border-top: 1px solid var(--navy-line);
+    }
+    .final-cta h2 {
+      font-size: clamp(1.6rem, 4.4vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .final-cta p { color: var(--muted); margin-bottom: 34px; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: #080d22;
+      border-top: 1px solid var(--navy-line);
+      padding: 48px 0 40px;
+    }
+    footer .foot-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 26px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    footer .foot-brand .logo {
+      background: #fff;
+      border-radius: 8px;
+      padding: 6px 10px;
+      display: inline-flex;
+      margin-bottom: 14px;
+    }
+    footer .foot-brand .logo img { height: 24px; display: block; }
+    footer .foot-brand p { color: var(--muted); font-size: 0.9rem; max-width: 380px; }
+    footer .foot-links { display: flex; flex-direction: column; gap: 8px; font-size: 0.92rem; }
+    footer .foot-links a { color: var(--muted); text-decoration: none; }
+    footer .foot-links a:hover { color: var(--text); text-decoration: underline; }
+    footer .copyright {
+      margin-top: 30px;
+      padding-top: 22px;
+      border-top: 1px solid var(--navy-line);
+      font-size: 0.82rem;
+      color: #6b73a0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      justify-content: space-between;
+    }
+    footer .copyright a { color: #8a93c4; text-decoration: none; }
+    footer .copyright a:hover { text-decoration: underline; }
+
+    /* ---------- Fade-up animation ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ---------- Floating CTA ---------- */
+    .fab {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      z-index: 200;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.72rem;
+      line-height: 1.15;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      box-shadow: 0 12px 30px rgba(240, 78, 35, 0.5);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .fab .fab-ico { font-size: 1.25rem; line-height: 1; }
+    .fab:hover {
+      transform: scale(1.12);
+      background: var(--orange-dark);
+      box-shadow: 0 16px 38px rgba(240, 78, 35, 0.6);
+    }
+    .fab:active { transform: scale(1.03); }
+
+    /* ---------- Modal ---------- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(5, 9, 24, 0.72);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+    }
+    .modal-overlay.show { opacity: 1; visibility: visible; }
+    .modal {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-line);
+      border-radius: 18px;
+      max-width: 400px;
+      width: 100%;
+      padding: 34px 30px 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transform: translateY(14px) scale(0.98);
+      transition: transform 0.22s ease;
+    }
+    .modal-overlay.show .modal { transform: none; }
+    .modal .m-ico {
+      font-size: 2.2rem;
+      margin-bottom: 14px;
+    }
+    .modal h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
+    .modal p { color: var(--muted); font-size: 0.96rem; margin-bottom: 26px; }
+    .modal .m-actions { display: flex; gap: 12px; }
+    .modal .m-actions .btn,
+    .modal .m-actions .btn-ghost {
+      flex: 1;
+      justify-content: center;
+      font-size: 1rem;
+      padding: 13px 20px;
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--navy-line);
+      color: var(--text);
+      font-family: inherit;
+      font-weight: 700;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.06); border-color: var(--muted); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .steps { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 580px) {
+      .benefits { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .period-box { grid-template-columns: 1fr; }
+      .period-box .cell + .cell { border-left: none; border-top: 1px solid var(--navy-line); }
+      .hero { padding: 68px 0 64px; }
+      section.block { padding: 58px 0; }
+      .nav .btn-sm { padding: 9px 16px; font-size: 0.85rem; }
+      .fab { width: 60px; height: 60px; right: 18px; bottom: 18px; font-size: 0.66rem; }
+      .fab .fab-ico { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Header -->
+  <header>
+    <div class="nav">
+      <span class="logo"><img src="logo2026_main.png" alt="잔재미코딩" /></span>
+      <a class="btn btn-sm js-survey" href="https://forms.gle/jtcUzpEifH7hEn128" target="_blank" rel="noopener">서베이 참여하기</a>
+    </div>
+  </header>
+
+  <!-- 2. Hero -->
+  <section class="hero">
+    <div class="wrap reveal">
+      <span class="eyebrow">잔재미코딩 학습자 서베이 이벤트</span>
+      <h1>다음 강의는<br /><span class="hl">당신의 의견</span>으로 만들어집니다</h1>
+      <p class="sub"><b>5분 서베이 응답</b> → <b>무료 수강권 추첨</b></p>
+      <a class="btn btn-lg js-survey" href="https://forms.gle/jtcUzpEifH7hEn128" target="_blank" rel="noopener">
+        지금 서베이 참여하기 <span class="arrow">→</span>
+      </a>
+      <p class="note">입문자 · 기존 수강생 · 강의에 관심 있는 누구나 참여 가능</p>
+    </div>
+  </section>
+
+  <!-- 3. Benefits -->
+  <section class="block" id="benefits">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="tag">Rewards</div>
+        <h2>참여 혜택</h2>
+        <p>서베이에 응답하면 자동으로 추첨에 응모됩니다.</p>
+      </div>
+      <div class="benefits">
+        <div class="benefit first reveal">
+          <span class="emoji">🎟️</span>
+          <span class="rank">1등</span>
+          <h3>잔재미코딩 무료 수강권</h3>
+          <p class="count">5명 · 원하는 강의 자유롭게 선택</p>
+        </div>
+        <div class="benefit second reveal">
+          <span class="emoji">🏷️</span>
+          <span class="rank">2등</span>
+          <h3>모든 강의 30% 할인 쿠폰</h3>
+          <p class="count">응답자 100명</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Steps -->
+  <section class="block" id="how" style="background: var(--navy-2); border-top: 1px solid var(--navy-line); border-bottom: 1px solid var(--navy-line);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="tag">How to join</div>
+        <h2>참여 방법 4단계</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><span class="num">1</span><h3>페이지<br />둘러보기</h3></div>
+        <div class="step reveal"><span class="num">2</span><h3>“서베이 참여하기”<br />버튼 클릭</h3></div>
+        <div class="step reveal"><span class="num">3</span><h3>구글 폼에<br />5분 응답</h3></div>
+        <div class="step reveal"><span class="num">4</span><h3>자동으로<br />추첨 응모</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Period / Announcement -->
+  <section class="block" id="schedule">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="tag">Schedule</div>
+        <h2>응모 기간 &amp; 당첨자 발표</h2>
+      </div>
+      <div class="period-box reveal">
+        <div class="cell">
+          <div class="ico">🗓️</div>
+          <div class="k">응모 기간</div>
+          <div class="v">4주간 진행</div>
+          <div class="vsub">기간 내 응답 시 추첨 대상</div>
+        </div>
+        <div class="cell">
+          <div class="ico">📣</div>
+          <div class="k">당첨자 발표</div>
+          <div class="v">마감 후 1주 이내</div>
+          <div class="vsub">당첨자 개별 연락</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FAQ -->
+  <section class="block" id="faq" style="background: var(--navy-2); border-top: 1px solid var(--navy-line); border-bottom: 1px solid var(--navy-line);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="tag">FAQ</div>
+        <h2>자주 묻는 질문</h2>
+      </div>
+      <div class="faq">
+        <div class="faq-item reveal">
+          <button class="faq-q">누구나 참여할 수 있나요? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="inner">네. 잔재미코딩 강의에 관심 있는 분이라면 누구나 참여할 수 있습니다. 아직 수강 경험이 없는 입문자부터 기존 수강생까지 모두 환영합니다.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">중복으로 응모할 수 있나요? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="inner">공정한 추첨을 위해 1인 1회 응모만 유효합니다. 여러 번 응답하셔도 추첨에는 1건으로만 반영됩니다.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">응답한 개인정보는 어떻게 관리되나요? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="inner">수집한 정보는 당첨자 연락 및 서베이 분석 목적으로만 사용되며, 이벤트 종료 후 관련 법령에 따라 안전하게 파기됩니다. 자세한 내용은 개인정보 처리방침을 확인해 주세요.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">당첨 여부는 어떻게 알 수 있나요? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="inner">응모 마감 후 1주 이내에 당첨자분께 개별적으로 연락드립니다. 응답 시 입력하신 연락처가 정확한지 꼭 확인해 주세요.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">서베이 응답에는 시간이 얼마나 걸리나요? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="inner">약 5분이면 충분합니다. 부담 없이 솔직한 의견을 들려주세요. 여러분의 답변이 잔재미코딩의 다음 강의로 이어집니다.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Final CTA -->
+  <section class="final-cta">
+    <div class="wrap reveal">
+      <h2>지금 서베이 참여하고<br />무료 수강권 받아가세요</h2>
+      <p>5분이면 끝. 참여 즉시 추첨에 자동 응모됩니다.</p>
+      <a class="btn btn-lg js-survey" href="https://forms.gle/jtcUzpEifH7hEn128" target="_blank" rel="noopener">
+        지금 서베이 참여하기 <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 8. Footer -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="foot-brand">
+          <span class="logo"><img src="logo2026_main.png" alt="잔재미코딩" /></span>
+          <p>입문자도 단계별로 따라올 수 있는 IT·AI 교육 플랫폼, 잔재미코딩.</p>
+        </div>
+        <div class="foot-links">
+          <a href="https://fun-coding.org" target="_blank" rel="noopener">fun-coding.org</a>
+          <a href="https://school.fun-coding.org" target="_blank" rel="noopener">school.fun-coding.org</a>
+          <a href="mailto:contact@fun-coding.org">contact@fun-coding.org</a>
+        </div>
+      </div>
+      <div class="copyright">
+        <span>© 2026 잔재미코딩 (fun-coding). All rights reserved.</span>
+        <span>
+          <a href="#">이용약관</a> · <a href="#">개인정보 처리방침</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating CTA -->
+  <a class="fab js-survey" href="https://forms.gle/jtcUzpEifH7hEn128" target="_blank" rel="noopener" aria-label="서베이 참여하기">
+    <span class="fab-ico">✏️</span>
+    <span>서베이<br />참여</span>
+  </a>
+
+  <!-- Confirm modal -->
+  <div class="modal-overlay" id="surveyModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal">
+      <div class="m-ico">🔒</div>
+      <h3 id="modalTitle">서베이 참여 안내</h3>
+      <p>서베이는 익명으로 진행됩니다.<br />참여하시겠습니까?</p>
+      <div class="m-actions">
+        <button class="btn-ghost" id="modalCancel">취소</button>
+        <button class="btn" id="modalConfirm">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 섹션 진입 시 페이드업
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+
+    // FAQ 아코디언
+    (function () {
+      var qs = document.querySelectorAll('.faq-q');
+      qs.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var item = btn.closest('.faq-item');
+          var ans = item.querySelector('.faq-a');
+          var isOpen = item.classList.contains('open');
+          if (isOpen) {
+            item.classList.remove('open');
+            ans.style.maxHeight = null;
+          } else {
+            item.classList.add('open');
+            ans.style.maxHeight = ans.scrollHeight + 'px';
+          }
+        });
+      });
+    })();
+
+    // 서베이 참여 확인 모달
+    (function () {
+      var overlay = document.getElementById('surveyModal');
+      var confirmBtn = document.getElementById('modalConfirm');
+      var cancelBtn = document.getElementById('modalCancel');
+      var pendingUrl = null;
+
+      function openModal(url) {
+        pendingUrl = url;
+        overlay.classList.add('show');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        confirmBtn.focus();
+      }
+      function closeModal() {
+        overlay.classList.remove('show');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        pendingUrl = null;
+      }
+
+      // 모든 "서베이 참여" 버튼 → 모달 먼저
+      document.querySelectorAll('.js-survey').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          openModal(el.getAttribute('href'));
+        });
+      });
+
+      // 확인 → 구글 폼 새 창
+      confirmBtn.addEventListener('click', function () {
+        if (pendingUrl) window.open(pendingUrl, '_blank', 'noopener');
+        closeModal();
+      });
+
+      // 취소 / 배경 클릭 / ESC → 닫기
+      cancelBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('show')) closeModal();
+      });
+    })();
+  </script>
+
+</body>
+</html>
